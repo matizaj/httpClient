@@ -22,20 +22,21 @@ export class HttpService {
     return this.http.get<Array<Post>>('https://jsonplaceholder.typicode.com/posts/', {params: options});
   }
 
-  addPost(post: Post) {
+  addPost(post: Post): Observable<Post> {
+    return this.http.post<Post>('https://jsonplaceholder.typicode.com/posts', post)
 
   }
-  updatePost(post: Post) {
-
+  updatePost(post: Post): Observable<Post> {
+    return this.http.put<Post>('https://jsonplaceholder.typicode.com/posts/' + post.id, post)
   }
 
   /** Usuwamy post */
-  deletePost(id: number) {
-
+  deletePost(id: number): Observable<Post> {
+    return this.http.delete<Post>('https://jsonplaceholder.typicode.com/posts/' + id);
   }
 
   /** Aktualizujemy pola w post */
-  changePost(post: Post) {
-
+  changePost(post: Post):Observable<Post> {
+    return this.http.put<Post>('https://jsonplaceholder.typicode.com/posts/' + post.id, post)
   }
 }

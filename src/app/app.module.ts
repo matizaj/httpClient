@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HttpService } from './_services/http.service';
+import { SpyInterceptor } from './spy.interceptor';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,17 @@ import { HttpService } from './_services/http.service';
     HttpClientModule
   ],
   providers: [
-    HttpService
+    HttpService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpyInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
